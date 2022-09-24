@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysql-task2
+  namespace: dev
+  labels:
+    app: mysql
+spec:
+  containers:
+    - name: mysql
+      image: mysql:5.7
+      ports:
+        - containerPort: 3306
+      env:
+        - name: MYSQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: mysql-config
+              key: MYSQL_DATABASE
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: mysql-root-password
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: mysql-user
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: mysql-password
+      resources:
+        requests:
+          memory: "500Mi"
+          cpu: "500m"
+        limits:
+          memory: "500Mi"
+          cpu: "500m"
