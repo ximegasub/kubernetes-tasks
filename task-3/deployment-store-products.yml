@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: store-products-deploy-task3
+  labels: 
+    env: test
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      env: test
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      name: store-products-task3
+      labels:
+        app: store-products      
+        env: test
+    spec:
+      containers:
+        - name: store-products
+          image: calebespinoza/store-products:1.0
+          ports:
+            - containerPort: 80

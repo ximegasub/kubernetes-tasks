@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: jenkins-rs-task3
+  labels: 
+    env: dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: task3
+  template:
+    metadata:
+      name: jenkins-rs
+      labels:
+        app: task3
+    spec:
+      containers:
+        - name: jenkins
+          image: jenkins/jenkins:jdk11
+          ports:
+            - containerPort: 8080
